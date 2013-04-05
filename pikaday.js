@@ -621,7 +621,21 @@
                 this._o.onSelect.call(this, this.getDate());
             }
         },
-
+		
+		/**
+		 * Update/Change the MinDate
+		 */
+		setMinDate: function(date) {
+			this._o.minDate = date;
+		},
+		
+		/**
+		 * Update/Change the MaxDate
+		 */
+		setMaxDate: function(date) {
+			this._o.maxDate = date;
+		},
+		
         /**
          * change view to a specific date
          */
