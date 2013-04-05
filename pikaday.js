@@ -623,17 +623,55 @@
         },
 		
 		/**
-		 * Update/Change the MinDate
+		 * Update/Change the minDate
 		 */
 		setMinDate: function(date) {
 			this._o.minDate = date;
+			
+			if (date !== false) {
+				this.setMinYear(date.getFullYear());
+				this.setMinMonth(date.getMonth());
+			}
 		},
 		
 		/**
-		 * Update/Change the MaxDate
+		 * Update/Change the maxDate
 		 */
 		setMaxDate: function(date) {
 			this._o.maxDate = date;
+			
+			if (date !== false) {
+				this.setMaxYear(date.getFullYear());
+				this.setMaxMonth(date.getMonth());
+			}
+		},
+		
+		/**
+		 * Update/Change the minYear
+		 */
+		setMinYear: function(date) {
+			this._o.minYear = date;
+		},
+		
+		/**
+		 * Update/Change the maxYear
+		 */
+		setMaxYear: function(date) {
+			this._o.maxYear = date;
+		},
+		
+		/**
+		 * Update/Change the minMonth
+		 */
+		setMinMonth: function(date) {
+			this._o.minMonth = date;
+		},
+		
+		/**
+		 * Update/Change the maxMonth
+		 */
+		setMaxMonth: function(date) {
+			this._o.maxMonth = date;
 		},
 		
         /**
