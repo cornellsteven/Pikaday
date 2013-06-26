@@ -735,22 +735,6 @@
         },
 
         /**
-         * change the minDate
-         */
-        setMinDate: function(value)
-        {
-            this._o.minDate = value;
-        },
-
-        /**
-         * change the maxDate
-         */
-        setMaxDate: function(value)
-        {
-            this._o.maxDate = value;
-        },
-
-        /**
          * refresh the HTML
          */
         draw: function(force)
