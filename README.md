@@ -75,6 +75,7 @@ As the examples demonstrate above
 Pikaday has many useful options:
 
 * `field` bind the datepicker to a form field
+* `trigger` use a different element to trigger opening the datepicker, see [trigger example][] (default to `field`)
 * `bound` automatically show/hide the datepicker on `field` focus (default `true` if `field` is set)
 * `format` the default output format for `.toString()` and `field` value (requires [Moment.js][moment] for advanced formatting)
 * `defaultDate` the initial date to view when first opened
@@ -186,6 +187,14 @@ Go to the next or previous month (this will change year if necessary).
 
 Change the year being viewed.
 
+`picker.setMinDate()`
+
+Update the minimum/earliest date that can be selected.
+
+`picker.setMaxDate()`
+
+Update the maximum/latest date that can be selected.
+
 ### Show and hide datepicker
 
 `picker.isVisible()`
@@ -195,6 +204,10 @@ Returns `true` or `false`.
 `picker.show()`
 
 Make the picker visible.
+
+`picker.adjustPosition()`
+
+Recalculate and change the position of the picker.
 
 `picker.hide()`
 
@@ -228,7 +241,8 @@ You must provide 12 months and 7 weekdays (with abbreviations). Always specify w
 Pikaday is a pure datepicker. It will not support picking a time of day. However, there have been efforts to add time support to Pikaday.  
 See [#1][issue1] and [#18][issue18]. These reside in their own fork.
 
-You can use the work [@stas][stas] did at [stas/Pikaday][stas Pika]
+You can use the work [@stas][stas] did at [stas/Pikaday][stas Pika]  
+or the work [@owenmead][owenmead] did more recently at [owenmead/Pikaday][owen Pika] which is based on version 1.1.0.
 
 
 ## Browser Compatibility
@@ -266,7 +280,10 @@ Copyright © 2013 David Bushell | BSD & MIT license
   [issue18]:     https://github.com/dbushell/Pikaday/issues/18                    "Issue 18"
   [stas]:        https://github.com/stas                                          "@stas"
   [stas Pika]:   https://github.com/stas/Pikaday                                  "Pikaday"
+  [owenmead]:     https://github.com/owenmead                                     "@owenmead"
+  [owen Pika]:   https://github.com/owenmead/Pikaday                              "Pikaday"
   [moment.js example]: http://dbushell.github.com/Pikaday/examples/moment.html    "Pikaday w/ moment.js"
   [jQuery example]: http://dbushell.github.com/Pikaday/examples/jquery.html       "Pikaday w/ jQuery"
   [AMD example]: http://dbushell.github.com/Pikaday/examples/amd.html             "Pikaday w/ AMD"
   [jQuery AMD example]: http://dbushell.github.com/Pikaday/examples/jquery-amd.html "Pikaday w/ jQuery + AMD"
+  [trigger example]: http://dbushell.github.com/Pikaday/examples/trigger.html     "Pikaday using custom trigger"

@@ -436,7 +436,7 @@
                 }
             }
             while ((pEl = pEl.parentNode));
-            if (self._v && target !== opts.field) {
+            if (self._v && target !== opts.trigger) {
                 self.hide();
             }
         };
@@ -480,9 +480,9 @@
         if (opts.bound) {
             this.hide();
             self.el.className += ' is-bound';
-            addEvent(opts.field, 'click', self._onInputClick);
-            addEvent(opts.field, 'focus', self._onInputFocus);
-            addEvent(opts.field, 'blur', self._onInputBlur);
+            addEvent(opts.trigger, 'click', self._onInputClick);
+            addEvent(opts.trigger, 'focus', self._onInputFocus);
+            addEvent(opts.trigger, 'blur', self._onInputBlur);
         } else {
             this.show();
         }
@@ -512,6 +512,8 @@
             opts.field = (opts.field && opts.field.nodeName) ? opts.field : null;
 
             opts.bound = !!(opts.bound !== undefined ? opts.field && opts.bound : opts.field);
+
+            opts.trigger = (opts.trigger && opts.trigger.nodeName) ? opts.trigger : opts.field;
 
             var nom = parseInt(opts.numberOfMonths, 10) || 1;
             opts.numberOfMonths = nom > 4 ? 4 : nom;
@@ -733,6 +735,22 @@
         },
 
         /**
+         * change the minDate
+         */
+        setMinDate: function(value)
+        {
+            this._o.minDate = value;
+        },
+
+        /**
+         * change the maxDate
+         */
+        setMaxDate: function(value)
+        {
+            this._o.maxDate = value;
+        },
+
+        /**
          * refresh the HTML
          */
         draw: function(force)
@@ -762,17 +780,12 @@
             this.el.innerHTML = renderTitle(this) + this.render(this._y, this._m);
 
             if (opts.bound) {
-                var pEl  = opts.field,
-                    left = pEl.offsetLeft,
-                    top  = pEl.offsetTop + pEl.offsetHeight;
-                while((pEl = pEl.offsetParent)) {
-                    left += pEl.offsetLeft;
-                    top  += pEl.offsetTop;
+                this.adjustPosition();
+                if(opts.field.type !== 'hidden') {
+                    sto(function() {
+                        opts.trigger.focus();
+                    }, 1);
                 }
-                this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
-                sto(function() {
-                    opts.field.focus();
-                }, 1);
             }
 
             if (typeof this._o.onDraw === 'function') {
@@ -781,6 +794,37 @@
                     self._o.onDraw.call(self);
                 }, 0);
             }
+        },
+
+        adjustPosition: function()
+        {
+            var field = this._o.trigger, pEl = field,
+            width = this.el.offsetWidth, height = this.el.offsetHeight,
+            viewportWidth = window.innerWidth || document.documentElement.clientWidth,
+            viewportHeight = window.innerHeight || document.documentElement.clientHeight,
+            scrollTop = window.pageYOffset || document.body.scrollTop || document.documentElement.scrollTop,
+            left, top, clientRect;
+
+            if (typeof field.getBoundingClientRect === 'function') {
+                clientRect = field.getBoundingClientRect();
+                left = clientRect.left + window.pageXOffset;
+                top = clientRect.bottom + window.pageYOffset;
+            } else {
+                left = pEl.offsetLeft;
+                top  = pEl.offsetTop + pEl.offsetHeight;
+                while((pEl = pEl.offsetParent)) {
+                    left += pEl.offsetLeft;
+                    top  += pEl.offsetTop;
+                }
+            }
+
+            if (left + width > viewportWidth) {
+                left = left - width + field.offsetWidth;
+            }
+            if (top + height > viewportHeight + scrollTop) {
+                top = top - height - field.offsetHeight;
+            }
+            this.el.style.cssText = 'position:absolute;left:' + left + 'px;top:' + top + 'px;';
         },
 
         /**
@@ -873,9 +917,9 @@
             if (this._o.field) {
                 removeEvent(this._o.field, 'change', this._onInputChange);
                 if (this._o.bound) {
-                    removeEvent(this._o.field, 'click', this._onInputClick);
-                    removeEvent(this._o.field, 'focus', this._onInputFocus);
-                    removeEvent(this._o.field, 'blur', this._onInputBlur);
+                    removeEvent(this._o.trigger, 'click', this._onInputClick);
+                    removeEvent(this._o.trigger, 'focus', this._onInputFocus);
+                    removeEvent(this._o.trigger, 'blur', this._onInputBlur);
                 }
             }
             if (this.el.parentNode) {
